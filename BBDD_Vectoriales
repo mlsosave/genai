@@ -1,0 +1,13 @@
+#
+# CÓDIGO
+#
+
+# Crear texto consolidado para embeddings
+df["text_for_embedding"] = (
+    "Title: " + df["title"].fillna('') + ". " +
+    "Brand: " + df["brand"].fillna('') + ". " +
+    "Description: " + df["description"].fillna('')
+)
+
+# Ver resultado
+display(df[["text_for_embedding"]].head())
