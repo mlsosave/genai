@@ -11,3 +11,40 @@ df["text_for_embedding"] = (
 
 # Ver resultado
 display(df[["text_for_embedding"]].head())
+
+
+
+	text_for_embedding
+0	Title: Men's 3X Large Carbon Heather Cotton/Po...
+1	Title: Turmode 30 ft. RP TNC Female to RP TNC ...
+2	Title: Large Tapestry Bolster Bed. Brand: Caro...
+3	Title: 16-Gauge-Sinks Vessel Sink in White wit...
+4	Title: Men's Crazy Horse 9'' Logger Boot - Ste...
+
+
+#Cargar el modelo de embeddings all-MiniLM-L6-v2 utilizando la librería sentence-transformers.
+
+#
+# CÓDIGO
+#
+
+try:
+    from sentence_transformers import SentenceTransformer
+    print("sentence-transformers ya está instalada")
+
+except ImportError:
+    print("Instalando sentence-transformers...")
+    !pip install sentence-transformers
+
+    from sentence_transformers import SentenceTransformer
+
+# Cargar modelo de embeddings
+model = SentenceTransformer('all-MiniLM-L6-v2')
+texto = "Heavyweight water-resistant hoodie"
+
+embedding = model.encode(texto)
+
+print(type(embedding))
+print(len(embedding))
+
+
