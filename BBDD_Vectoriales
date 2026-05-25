@@ -48,3 +48,24 @@ print(type(embedding))
 print(len(embedding))
 
 
+# Definir una función que, dado un texto, retorne su vector de embeddings en forma de lista.
+
+ 
+
+## CÓDIGO## Función para generar embeddings
+
+def get_embedding(text):    
+	embedding = model.encode(text)    
+	return embedding.tolist()
+
+texto = "Water-resistant hoodie for outdoor work"
+vector = get_embedding(texto)
+print(type(vector))
+print(len(vector))
+print(vector[:5])  # primeros valores
+
+ <class 'list'>
+384
+[-0.10486903786659241, 0.15258213877677917, 0.011117440648376942, 0.06310620158910751, 0.12549202144145966]
+
+
