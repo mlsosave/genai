@@ -237,3 +237,30 @@ Price: 23.24
 URL: https://www.homedepot.com/p/Norwall-Monet-Meadow-Paper-Roll-Wallpaper-Covers-56-sq-ft-FW36801/310457294
 ------------------------------------------------------------
 
+Qué hace este código
+Convierte la consulta en embedding.
+Busca los vectores más similares.
+Devuelve:
+score de similitud,
+título,
+marca,
+precio,
+URL.
+Otras consultas interesantes
+Probá también:
+queries = [
+    "comfortable work boots",
+    "wireless antenna cable",
+    "water resistant hoodie",
+    "pet bed for large dogs",
+    "bathroom sink with faucet"
+]
+Interpretación del score
+Más cerca de 1 → más similar.
+Más bajo → menos relevante.
+Con metric="cosine" normalmente:
+> 0.80 → muy relevante
+0.60 - 0.80 → razonable
+< 0.50 → débil dependiendo del dataset.
+
+
