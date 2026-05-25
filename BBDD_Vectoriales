@@ -115,4 +115,50 @@ if index_name not in [index.name for index in pc.list_indexes()]:
 else:
     print(f"El índice '{index_name}' ya existe")
 
+#Implementa el código necesario para recorrer los datos del DataFrame, generar los embeddings correspondientes y realizar
+#la inserción de la información en el índice creado previamente. 
+#Se debe utilizar un esquema de procesamiento por lotes para optimizar la carga.
 
+# Lo hacmos creando batches de registros, generando los embeddings del lote completo y luego haciendo upsert a Pinecone.
+# Este enfoque es mucho más eficiente que insertar uno por uno
+
+from tqdm import tqdm
+
+# Tamaño del lote
+batch_size = 100
+
+# Recorrer DataFrame por lotes
+for i in tqdm(range(0, len(df), batch_size)):
+
+    # Seleccionar lote
+    batch = df.iloc[i:i + batch_size]
+
+    # Obtener textos
+    texts = batch["text_for_embedding"].tolist()
+
+    # Generar embeddings del lote
+    embeddings = model.encode(texts).tolist()
+
+    # Preparar vectores para Pinecone
+    vectors = []
+
+    for j, (_, row) in enumerate(batch.iterrows()):
+
+        vector = {
+            "id": str(row["uniq_id"]),
+            "values": embeddings[j],
+            "metadata": {
+                "title": row["title"],
+                "brand": row["brand"],
+                "description": row["description"],
+                "price": float(row["price"]) if pd.notnull(row["price"]) else None,
+                "url": row["url"]
+            }
+        }
+
+        vectors.append(vector)
+
+    # Insertar lote en Pinecone
+    index.upsert(vectors=vectors)
+
+print("Carga de embeddings completada")
