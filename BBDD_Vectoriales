@@ -68,4 +68,51 @@ print(vector[:5])  # primeros valores
 384
 [-0.10486903786659241, 0.15258213877677917, 0.011117440648376942, 0.06310620158910751, 0.12549202144145966]
 
+Creación del índice en Pinecone
+
+try:
+    from pinecone import Pinecone
+    print("pinecone ya está instalada")
+
+except ImportError:
+    print("Instalando pinecone...")
+    !pip install pinecone
+
+    from pinecone import Pinecone
+
+from google.colab import userdata
+
+# Obtener API Key
+PINECONE_API_KEY = userdata.get('PINECONE_API_KEY')
+
+# Inicializar cliente
+pc = Pinecone(api_key=PINECONE_API_KEY)
+
+print("Pinecone inicializado correctamente")
+
+
+# Crear un índice en Pinecone con la dimensión correspondiente al modelo y con la métrica cosine.
+
+from pinecone import ServerlessSpec
+
+index_name = "home-depot-index"
+
+# Verificar si el índice ya existe
+if index_name not in [index.name for index in pc.list_indexes()]:
+    
+    pc.create_index(
+        name=index_name,
+        dimension=384,          # dimensión del modelo all-MiniLM-L6-v2
+        metric="cosine",
+        spec=ServerlessSpec(
+            cloud="aws",
+            region="us-east-1"
+        )
+    )
+
+    print(f"Índice '{index_name}' creado correctamente")
+
+else:
+    print(f"El índice '{index_name}' ya existe")
+
 
