@@ -1,0 +1,83 @@
+
+# Búsqueda semántica Realiza consultas al índice utilizando consultas del estilo "best tool for repairing walls" y muestra los resultados obtenidos.
+
+Podés hacer una búsqueda semántica generando primero el embedding de la consulta y luego consultando Pinecone.
+# Consulta de ejemplo
+query = "best tool for repairing walls"
+
+# Generar embedding de la consulta
+query_embedding = model.encode(query).tolist()
+
+# Buscar en Pinecone
+results = index.query(
+    vector=query_embedding,
+    top_k=5,
+    include_metadata=True
+)
+
+# Mostrar resultados
+for match in results["matches"]:
+    
+    print(f"Score: {match['score']:.4f}")
+    print(f"Title: {match['metadata'].get('title')}")
+    print(f"Brand: {match['metadata'].get('brand')}")
+    print(f"Price: {match['metadata'].get('price')}")
+    print(f"URL: {match['metadata'].get('url')}")
+    print("-" * 60)
+
+Score: 0.4360
+Title: 4 in. Eclipse Wall Repair Patch (2-Pack)
+Brand: DAP
+Price: 23.96
+URL: https://www.homedepot.com/p/DAP-4-in-Eclipse-Wall-Repair-Patch-2-Pack-7079809164/317967195
+------------------------------------------------------------
+Score: 0.4244
+Title: Wallpaper Scoring Tool (6-Pack)
+Brand: Zinsser
+Price: 43.56
+URL: https://www.homedepot.com/p/Zinsser-Wallpaper-Scoring-Tool-6-Pack-338845/305793766
+------------------------------------------------------------
+Score: 0.3360
+Title: 11 in. x 14 in. "Bless The Food Kitchen Dining Room Textured Word" by Stephanie Workman Marrott Framed Wall Art
+Brand: Stupell Industries
+Price: 28.16
+URL: https://www.homedepot.com/p/Stupell-Industries-11-in-x-14-in-Bless-The-Food-Kitchen-Dining-Room-Textured-Word-by-Stephanie-Workman-Marrott-Framed-Wall-Art-kwp-2087-fr-11x14/311267100
+------------------------------------------------------------
+Score: 0.3346
+Title: Driftwood Grain Paper Strippable Wallpaper (Covers 56.9 sq. ft.)
+Brand: York Wallcoverings
+Price: 78.18
+URL: https://www.homedepot.com/p/York-Wallcoverings-Driftwood-Grain-Paper-Strippable-Wallpaper-Covers-56-9-sq-ft-MM1742/309326374
+------------------------------------------------------------
+Score: 0.3321
+Title: Monet Meadow Paper Roll Wallpaper (Covers 56 sq. ft.)
+Brand: Norwall
+Price: 23.24
+URL: https://www.homedepot.com/p/Norwall-Monet-Meadow-Paper-Roll-Wallpaper-Covers-56-sq-ft-FW36801/310457294
+------------------------------------------------------------
+
+Qué hace este código
+Convierte la consulta en embedding.
+Busca los vectores más similares.
+Devuelve:
+score de similitud,
+título,
+marca,
+precio,
+URL.
+Otras consultas interesantes
+Probá también:
+queries = [
+    "comfortable work boots",
+    "wireless antenna cable",
+    "water resistant hoodie",
+    "pet bed for large dogs",
+    "bathroom sink with faucet"
+]
+Interpretación del score
+Más cerca de 1 → más similar.
+Más bajo → menos relevante.
+Con metric="cosine" normalmente:
+> 0.80 → muy relevante
+0.60 - 0.80 → razonable
+< 0.50 → débil dependiendo del dataset.
