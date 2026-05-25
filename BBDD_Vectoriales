@@ -162,3 +162,19 @@ for i in tqdm(range(0, len(df), batch_size)):
     index.upsert(vectors=vectors)
 
 print("Carga de embeddings completada")
+
+Qué hace este código
+Recorre el DataFrame en bloques de 100.
+Genera embeddings en batch (más rápido).
+Construye objetos compatibles con Pinecone.
+Inserta los vectores usando upsert().
+Estructura almacenada en Pinecone
+Cada vector tendrá:
+id → identificador único
+values → embedding numérico
+metadata → información del producto
+Después vas a poder hacer:
+búsqueda semántica,
+recomendaciones,
+RAG,
+filtros por metadata.
