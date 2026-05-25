@@ -178,3 +178,31 @@ búsqueda semántica,
 recomendaciones,
 RAG,
 filtros por metadata.
+
+
+# Búsqueda semántica Realiza consultas al índice utilizando consultas del estilo "best tool for repairing walls" y muestra los resultados obtenidos.
+
+Podés hacer una búsqueda semántica generando primero el embedding de la consulta y luego consultando Pinecone.
+# Consulta de ejemplo
+query = "best tool for repairing walls"
+
+# Generar embedding de la consulta
+query_embedding = model.encode(query).tolist()
+
+# Buscar en Pinecone
+results = index.query(
+    vector=query_embedding,
+    top_k=5,
+    include_metadata=True
+)
+
+# Mostrar resultados
+for match in results["matches"]:
+    
+    print(f"Score: {match['score']:.4f}")
+    print(f"Title: {match['metadata'].get('title')}")
+    print(f"Brand: {match['metadata'].get('brand')}")
+    print(f"Price: {match['metadata'].get('price')}")
+    print(f"URL: {match['metadata'].get('url')}")
+    print("-" * 60)
+
