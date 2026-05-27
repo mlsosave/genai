@@ -1,0 +1,40 @@
+# Realiza una práctica de búsqueda semántica utilizando FAISS y un dataset del sitio web https://www.kaggle.com/datasets.
+
+FAISS es una librería de Meta para búsqueda eficiente de similitud vectorial y se usa ampliamente en sistemas de semantic search.
+Una práctica simple y muy buena es usar datasets de:
+productos,
+películas,
+noticias,
+reseñas,
+preguntas/respuestas.
+
+
+Diferencia entre FAISS y Pinecone
+FAISS	Pinecone
+Local	Cloud
+Gratis/local	Servicio administrado
+Muy rápido	Escalable
+Ideal aprendizaje	Ideal producción
+Ambos hacen:
+búsqueda vectorial,
+semantic search,
+nearest neighbors.
+
+Instalar dependencias
+try:
+    import faiss
+    print("faiss ya está instalada")
+
+except ImportError:
+    print("Instalando faiss...")
+    !pip install faiss-cpu
+
+try:
+    from sentence_transformers import SentenceTransformer
+    print("sentence-transformers ya está instalada")
+
+except ImportError:
+    !pip install sentence-transformers
+
+
+
