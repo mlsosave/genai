@@ -1,1 +1,19 @@
+Implementación de pipeline RAG avanzado
+
+
+
+En este laboratorio, implementaremos un pipeline RAG (Retrieval-Augmented Generation) completo utilizando LangChain y Pinecone. 
+Exploraremos técnicas avanzadas de preprocesamiento, chunking, retrievers y optimización de contextos.
+
+Objetivos:
+
+Construir un pipeline RAG básico con LangChain
+
+Implementar técnicas de preprocesamiento de texto
+
+Explorar diferentes estrategias de chunking
+
+Utilizar retrievers avanzados y filtros de metadata
+
+Aplicar reordenamiento de contextos para evitar "Lost in the Middle"
 
